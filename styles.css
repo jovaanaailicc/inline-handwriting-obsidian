@@ -1,0 +1,167 @@
+/* ---------- ink layer over the note (margin notes + live strokes) ---------- */
+.hw-overlay {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: visible;
+	pointer-events: none;
+	z-index: 5;
+}
+.hw-hl { opacity: 0.35; }
+
+/* ---------- inline writing blocks ---------- */
+.block-language-handwriting {
+	margin: 0;
+	padding: 0;
+}
+.hw-block {
+	position: relative;
+	width: 100%;
+	border-radius: 6px;
+	transition: background-color 120ms ease;
+}
+.hw-block-svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	pointer-events: none;
+}
+.markdown-source-view.is-live-preview .cm-embed-block:has(.hw-block) {
+	padding: 0 !important;
+	margin: 0 !important;
+	border: none !important;
+	box-shadow: none !important;
+	background: transparent !important;
+}
+.markdown-source-view.is-live-preview .cm-embed-block:has(.hw-block):hover {
+	box-shadow: none !important;
+}
+.markdown-source-view.is-live-preview .hw-block:hover {
+	background-color: var(--background-modifier-hover);
+}
+/* delete button: Live Preview only, on hover; kept left of Obsidian's own "edit block" button */
+.hw-block-delete { display: none; }
+.markdown-source-view.is-live-preview .hw-block .hw-block-delete {
+	position: absolute;
+	top: var(--size-2-2, 4px);
+	right: 40px;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: auto;
+	padding: var(--size-2-1, 2px) var(--size-2-2, 4px);
+	border-radius: var(--radius-s, 4px);
+	color: var(--text-muted);
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: var(--shadow-s);
+	opacity: 0;
+	pointer-events: none;
+	cursor: pointer;
+	transition: opacity 120ms ease, color 120ms ease;
+}
+.markdown-source-view.is-live-preview .hw-block:hover .hw-block-delete {
+	opacity: 1;
+	pointer-events: auto;
+}
+.markdown-source-view.is-live-preview .hw-block .hw-block-delete:hover {
+	color: var(--text-error);
+	background-color: var(--background-modifier-hover);
+}
+.hw-block-delete svg {
+	width: var(--icon-s, 16px);
+	height: var(--icon-s, 16px);
+}
+/* blocks inside embedded notes belong to another file: no delete there */
+.markdown-embed .hw-block .hw-block-delete { display: none !important; }
+
+.hw-error {
+	color: var(--text-error);
+	font-size: var(--font-ui-small);
+}
+
+/* ---------- handwriting mode (mouse draws) ---------- */
+body.hw-ink-mode .markdown-source-view.is-live-preview .cm-scroller {
+	cursor: crosshair;
+	touch-action: none;
+	user-select: none;
+}
+body.hw-tool-eraser .markdown-source-view.is-live-preview .cm-scroller:hover {
+	cursor: cell;
+}
+
+/* ---------- floating toolbar ---------- */
+.hw-toolbar {
+	position: absolute;
+	right: 16px;
+	bottom: 16px;
+	z-index: 20;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 4px 6px;
+	border-radius: 999px;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: var(--shadow-s);
+	opacity: 0.55;
+	transition: opacity 150ms ease;
+}
+.hw-toolbar:hover,
+body.hw-ink-mode .hw-toolbar { opacity: 1; }
+
+.markdown-source-view:not(.is-live-preview) .hw-toolbar { display: none !important; }
+
+.hw-toolbar .hw-btn {
+	padding: 4px;
+	height: auto;
+	border-radius: 6px;
+}
+.hw-toolbar .hw-btn.is-active {
+	color: var(--text-on-accent);
+	background-color: var(--interactive-accent);
+}
+.hw-sep {
+	width: 1px;
+	height: 18px;
+	margin: 0 4px;
+	background: var(--background-modifier-border);
+}
+.hw-swatch {
+	width: 18px;
+	height: 18px;
+	min-width: 18px;
+	padding: 0;
+	margin: 0 1px;
+	border-radius: 50%;
+	background: var(--hw-c) !important;
+	border: 2px solid transparent;
+	box-shadow: 0 0 0 1px var(--background-modifier-border);
+	cursor: pointer;
+}
+.hw-swatch.is-active {
+	box-shadow: 0 0 0 2px var(--interactive-accent);
+}
+.hw-size {
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent !important;
+	box-shadow: none !important;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.hw-size span {
+	display: block;
+	border-radius: 50%;
+	background: var(--text-muted);
+}
+.hw-size.is-active { background: var(--background-modifier-hover) !important; }
+.hw-size.is-active span { background: var(--text-normal); }

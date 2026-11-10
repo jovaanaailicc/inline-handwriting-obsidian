@@ -1,0 +1,9 @@
+{
+	"id": "inline-handwriting",
+	"name": "Inline Handwriting",
+	"version": "0.1.0",
+	"minAppVersion": "1.4.0",
+	"description": "Write by hand anywhere in a note: margin notes beside typed text and handwriting blocks between lines. Pen draws, mouse types.",
+	"author": "You",
+	"isDesktopOnly": false
+}
